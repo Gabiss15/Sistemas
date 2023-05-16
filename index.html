@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <script>
+        
+        var contatos = [];
+
+        function CadastroTel() {
+            var nome = document.getElementById("nome").value
+            var tel = document.getElementById("tel").value
+            if(nome && tel) {
+                var contato = {
+                nome: nome,
+                telefone: tel
+                };
+                contatos.push(contato)
+                VisualizarTel()
+            }
+            document.getElementById("nome").value = ""
+            document.getElementById("tel").value = ""
+        }
+
+        function buscarContato() {
+            var procura = document.getElementById("pesquisaNome").value;
+            var contato = contatos.find(function(item) {
+            return item.nome === procura;
+        });
+
+            if(contato){
+                alert("Nome: " + contato.nome + "\nTelefone: " + contato.telefone);
+            }else {
+                alert("Nome inválido");
+            }
+        }
+
+        function VisualizarNumero() {
+            var contatos = document.getElementById("contatos");
+            contactList.innerHTML = "";
+
+            contatos.forEach(function(item) {
+                var li = document.createElement("li");
+                li.textContent = "Nome: " + item.nome + ", Telefone: " + item.telefone;
+                contactList.appendChild(li);
+        });
+        }
+
+        function ApagarCadastro() {
+            var removeName = document.getElementById("apagarNome").value
+
+            for(var i =0; i< contatos.length; i++) {
+                if(contatos[i].nome === removeName){
+                    contatos.splice(i, 1)
+                    break;
+                }
+            }
+            exibirContatos();
+        }
+
+        function EditarCadastro() {
+            var EditNome = document.getElementById("editarn").value;
+            var EditTel = document.getElementById("editart").value;
+
+            var contato = contatos.find(function(item) {
+                return item.telefone === updatePhone;
+            });
+            if (contato) {
+                contato.nome = updateName;
+                contato.telefone = updatePhone;
+                exibirContatos();
+            }
+            document.getElementById("editn").value = "";
+            document.getElementById("editt").value = "";
+        }
+
+
+        function Atualizar(numero) {
+            var contato = contatos.find(function(item) {
+                return item.telefone === numero;
+            });
+
+            if (contato) {
+                document.getElementById("editn").value = contato.nome;
+                document.getElementById("editt").value = contato.telefone;
+                atualizarContato(contato);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Gerenciador de Contatos</h1>
+
+    <h2>Adicionar Contato</h2>
+    <p>Nome:</p>
+        <input type="text" id="nome">
+    <br>
+    <p>Telefone:</p>
+    <input type="tel" id="tel">
+    <br>
+    <button onclick="CadastroTel()">Enviar</button>
+
+    <h2>Buscar Nome</h2>
+    <p>Nome:</p>
+    <input type="text" id="pesquisaNome" placeholder="Nome">
+    <br>
+    <button onclick="buscarContato()">Buscar</button>
+
+    <h2>Lista de Contatos</h2>
+    <ul id="contatos"></ul>
+
+    <h2>Remover Contato</h2>
+    <p>Nome:</p>
+    <input type="text" id="apagarNome">
+    <br>
+    <button onclick="ApagarContato()">Apagar</button>
+
+    <h2>Atualizar Contato</h2>
+    <p>Nome:</>
+    <input type="text" id="editn">
+    <br>
+    <p>Telefone:</p>
+    <input type="tel" id="editt" placeholder="Telefone">
+    <br>
+    <button onclick="EditarCadastro()">Atualizar</button>
+
+    
+    <script src="/atividade/script.js"></script>
+</body>
+
+</html>
